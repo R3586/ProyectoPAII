@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Diagnóstico{% endblock %} {% block
+content %}
+<h2>Diagnóstico de Enfermedad Cardíaca</h2>
+<form method="POST">
+  <div class="form-group">
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" required />
+  </div>
+  <div class="form-group">
+    <label for="sexo">Sexo:</label>
+    <select id="sexo" name="sexo" required>
+      <option value="M">Masculino</option>
+      <option value="F">Femenino</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="presion">Presión Arterial:</label>
+    <input type="number" id="presion" name="presion" required />
+  </div>
+  <div class="form-group">
+    <label for="colesterol">Colesterol:</label>
+    <input type="number" id="colesterol" name="colesterol" required />
+  </div>
+  <button type="submit">Predecir</button>
+</form>
+{% endblock %}

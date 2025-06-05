@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}Configuración{% endblock %} {% block
+content %}
+<h2>Configuración del Sistema</h2>
+<p>
+  Aquí podrá modificar sus datos personales, cambiar su contraseña o ajustar
+  preferencias del sistema.
+</p>
+<form method="POST">
+  <div class="form-group">
+    <label for="email">Correo electrónico:</label>
+    <input type="email" id="email" name="email" required />
+  </div>
+  <div class="form-group">
+    <label for="password">Nueva contraseña:</label>
+    <input type="password" id="password" name="password" />
+  </div>
+  <button type="submit">Guardar Cambios</button>
+</form>
+{% endblock %}

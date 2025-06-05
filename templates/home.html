@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% block title %}Inicio{% endblock %} {% block content
+%}
+<div class="hero-section">
+  <div class="hero-text">
+    <h1>Bienvenido a Salud del Corazón</h1>
+    <p class="lead">
+      Sistema integral para la gestión, consulta y predicción de enfermedades
+      cardíacas.
+    </p>
+    {% if not session.get('logged_in') %}
+    <div class="alert alert-info">
+      <strong
+        >Debe iniciar sesión para acceder a las funciones principales.</strong
+      >
+    </div>
+    {% endif %}
+    <div class="hero-actions">
+      {% if session.get('logged_in') %}
+      <a href="{{ url_for('diagnostico') }}" class="btn btn-primary"
+        >Realizar diagnóstico</a
+      >
+      {% else %}
+      <a href="{{ url_for('login') }}" class="btn btn-primary"
+        >Iniciar sesión</a
+      >
+      {% endif %}
+    </div>
+  </div>
+  <div class="hero-image">
+    <img
+      src="{{ url_for('static', filename='img/portada.png') }}"
+      alt="Salud cardiovascular"
+    />
+  </div>
+</div>
+{% endblock %}

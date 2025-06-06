@@ -5,6 +5,20 @@ import os
 app = Flask(__name__)
 app.secret_key = 'oculto'
 
+def init_db():
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    ''')
+    cursor.execute("INSERT OR IGNORE INTO usuarios VALUES (1, 'admin', 'admin')")
+    conn.commit()
+    conn.close()
+init_db()
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -13,7 +27,12 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username == 'admin' and password == 'admin':
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM usuarios WHERE username = ? AND password = ?", (username, password))
+        user = cursor.fetchone()
+        conn.close()
+        if user:
             session['logged_in'] = True
             return redirect(url_for('home'))
         else:
@@ -29,7 +48,13 @@ def diagnostico():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     resultado = None
-
+    if request.method == 'POST':
+        edad = request.form['edad']
+        sexo = request.form['sexo']
+        presion = request.form['presion']
+        colesterol = request.form['colesterol']
+        # aplicar machine learning 
+        resultado = "Riesgo bajo" if int(colesterol) < 200 else "Riesgo alto"
     return render_template('diagnostico.html', resultado=resultado)
 
 @app.route('/noticias')
